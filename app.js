@@ -17,11 +17,19 @@ const app =express();
 const PORT = process.env.PORT || 3000
 
 //basic configuration
-app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
-
 app.use(logger)
+
+
+app.use(express.static('public'));
+
+app.get('/', async (req, res) =>{
+    res.sendFile('./index.html', {root: 'views'}, (err) =>{
+        //console.log(err)
+    })
+})
 
 app.use('/auth', authRoute);
 
