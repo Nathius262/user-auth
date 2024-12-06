@@ -108,9 +108,9 @@ export class User{
             UPDATE users SET id username, name WHERE id=?;
         
         `;
-        if(this.db.get){
+        if(this.db.run){
            return new Promise((resolve, reject) =>{
-            this.db.get(
+            this.db.run(
                 query,
                 [id],
                 function (err){
@@ -126,14 +126,14 @@ export class User{
     }
 
     //delete user
-    async update(id){
+    async delete(id){
         const query = `
             DELETE FROM users WHERE id=?;
         
         `;
-        if(this.db.get){
+        if(this.db.run){
            return new Promise((resolve, reject) =>{
-            this.db.get(
+            this.db.run(
                 query,
                 [id],
                 (err) => {
