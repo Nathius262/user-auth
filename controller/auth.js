@@ -39,12 +39,12 @@ export const login = async (req, res) => {
         //validate user exist in db
         const user = await userModel.getByUsernamePassword(username)
         if(!user){
-            res.status(401).json(`Invalid username or password`)
+            return res.status(401).json(`Invalid username or password`)
         }
 
         const comparePassword = await bcrypt.compare(password, user.password);
         if(!comparePassword){
-            res.status(401).json(`Invalid password`)
+            return res.status(401).json(`Invalid password`)
         }
         
 
@@ -58,7 +58,7 @@ export const login = async (req, res) => {
 
 
         res.cookie('token', token, {
-            httpOnly:true,
+            httponly:true,
             secure:true,
             maxAge:60*60*1000 //cookies expires in an hour
         })
@@ -66,6 +66,7 @@ export const login = async (req, res) => {
 
         res.status(200).json('Login successfully')
     } catch (error) {
+        console.log(error)
         res.status(500).json(`Internal Server Error: ${error}`)
     }
 }
